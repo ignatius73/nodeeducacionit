@@ -1,0 +1,22 @@
+{
+  "name": "educacionit",
+  "version": "1.0.0",
+  "description": "Servidor de express para curso Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ignatius73/nodeeducacionit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ignatius73/nodeeducacionit/issues"
+  },
+  "homepage": "https://github.com/ignatius73/nodeeducacionit#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}

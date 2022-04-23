@@ -1,31 +1,72 @@
-const http = require("http")
-const PORT = 8080;
-const home = require('./home');
+const express = require('express')
 
-const servidor = http.createServer((request, response) =>{
-    
-    console.log(request.url);
-    if( request.url.includes('/api/')){
-        response.writeHead(200,{"Content-type":"application/json"})
-        switch(request.url){
-            default:
-                response.end(JSON.stringify([]))
-                break;
-        }
-    }else{
-        response.writeHead(200, { "content-type":"text/html"})
-        response.end(home);
 
+
+
+const app = express()
+
+
+const usuarios = [
+    {
+        id:1,
+        nombre:'Gabriel'
+    },
+    {
+        id:2,
+        nombre:'Hernán'
+    },
+    {
+        id:3,
+        nombre:'Alan'
     }
+]
+console.log(__dirname);
+console.log(__filename);
+
+/****************************
+ * 
+ * MiddleWares 
+ * 
+ */
+app.use(express.static('public'))
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
 
 
+app.get('/home', function (req, res) {
+res.sendFile(`${__dirname} '/public/home.html'`)
 
-
-
-
+})
+app.get('/usuarios', function (req, res) {
+res.sendFile(`${__dirname} '/public/usuarios.html'`)
 
 })
 
-servidor.listen(PORT, ()=>{
-    console.log('Escuchando peticiones http');
+app.get('/users', (req,res)=>{
+    res.json(usuarios)
+})
+
+app.get('/user/:id/:nombre', (req, res)=>{
+    const id = req.params.id
+    const nombre = req.params.nombre
+    const usuario = usuarios.filter((user)=> user.id == id && user.nombre == nombre)
+    res.json(usuario)
+})
+
+app.post('/user', (req, res)=>{
+    console.log(req.body);
+   res.send('Usuario cargado correctamente') 
+})
+
+/***********
+ * 
+ * GET - usuarios - usuarios.html
+ * GET - usuario - usuario.html
+ * GET - mensajes - mensajes.html
+ * 
+ * 
+ */
+
+app.listen(3000, ()=>{
+    console.log('Escuchando peticiones en el puerto 3000');
 })
