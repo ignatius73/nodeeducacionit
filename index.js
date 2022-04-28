@@ -1,4 +1,7 @@
 const express = require('express')
+const cors = require('cors')
+const usuariosRouter = require('./routes/users')
+
 
 
 
@@ -20,8 +23,6 @@ const usuarios = [
         nombre:'Alan'
     }
 ]
-console.log(__dirname);
-console.log(__filename);
 
 /****************************
  * 
@@ -31,41 +32,22 @@ console.log(__filename);
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
+app.use(cors());
 
+/***********************************
+ * 
+ * Routes as Middlewares
+ */
+app.use('/api/v1/users', usuariosRouter )
 
 app.get('/home', function (req, res) {
-res.sendFile(`${__dirname} '/public/home.html'`)
+res.sendFile(`${__dirname}/public/home.html`);
 
-})
-app.get('/usuarios', function (req, res) {
-res.sendFile(`${__dirname} '/public/usuarios.html'`)
+});
 
-})
-
-app.get('/users', (req,res)=>{
-    res.json(usuarios)
-})
-
-app.get('/user/:id/:nombre', (req, res)=>{
-    const id = req.params.id
-    const nombre = req.params.nombre
-    const usuario = usuarios.filter((user)=> user.id == id && user.nombre == nombre)
-    res.json(usuario)
-})
-
-app.post('/user', (req, res)=>{
-    console.log(req.body);
-   res.send('Usuario cargado correctamente') 
-})
-
-/***********
- * 
- * GET - usuarios - usuarios.html
- * GET - usuario - usuario.html
- * GET - mensajes - mensajes.html
- * 
- * 
- */
+app.get('/signup', (req, res)=>{
+    res.sendFile(`${__dirname}/public/signup.html`);
+});
 
 app.listen(3000, ()=>{
     console.log('Escuchando peticiones en el puerto 3000');

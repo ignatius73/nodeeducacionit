@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Sign Up</title>
+</head>
+<body>
+    <div class="container">
+        <div class="formulario">
+            <h1>Sign Up</h1>
+    
+            <form id="form__signup">
+                <input type="text" class="form-control" name="first" id="first__signup" placeholder="First name">
+                <br/>
+                <input type="text" class="form-control" name="last" id="last__signup" placeholder="Last name">
+                <br/>
+                
+                <input type="number" class="form-control" name="age" id="age__signup" placeholder="Age">
+                <br/>
+                <input type="file" class="form-control" name="avatar" id="image" placeholder="Avatar">
+                <br/>
+                <input type="email" class="form-control" name="email" id="user__signup" placeholder="Email">
+                <br/>
+                <input type="password" class="form-control" name="password" id="pass__signup" placeholder="Password">
+                <br/>
+                <input type="password" class="form-control" name="password2" id="pass2__signup" placeholder="Confirm password">
+                <br>
+                
+                <button type="button" id="submit" class="btn btn-primary submit" onclick="signup()">Sign Up</button>
+                <button type="reset" id="reset" class="btn btn-secondary">Reset</button>
+            
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var imageAsBase64;
+        function signup(){
+
+            const form = document.querySelector('#form__signup')
+            const formData = new FormData(form)
+            
+            const data = new URLSearchParams(formData)
+            data.set('avatar', imageAsBase64)
+            data.delete('password2')
+            fetch('/api/v1/users',
+            {
+                method:'post',
+                body: data
+
+            }).then( res => res.json())
+            .then( data => {
+                console.log(data);
+                window.location = '/usuarios/' + data.id
+            })
+            .catch(error => console.log(error))
+
+
+        }
+       
+        const image = document.querySelector('#image')
+
+        image.addEventListener('change', async(e)=>{
+            const file = e.srcElement.files[0];
+            console.log(file);
+           
+            fr = new FileReader()
+            fr.readAsDataURL(file)
+            fr.addEventListener("load", ()=>{
+                imageAsBase64 = fr.result;
+            },false)
+        })
+    </script>
+</body>
+</html>

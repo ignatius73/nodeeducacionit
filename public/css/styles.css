@@ -1,0 +1,35 @@
+.container{
+    align-items:center;
+    background-image: url('/css/assets/fondo.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    min-height:65rem;
+    min-width:100%;
+    
+}
+
+
+.formulario{
+   border-radius: 8px;
+   display:flex;
+   flex-direction:column;
+   min-height: 400px;
+   padding:2.5rem;
+   text-align: center;
+   width:30%; 
+
+}
+
+.footer{
+    display:flex;
+    justify-content: center;
+    background-color: black;
+    padding-top:0.5rem;
+}
+.footer h3{
+    font-size: 1.5rem;
+    color:azure
+}
