@@ -1,12 +1,19 @@
 const express = require('express')
 const cors = require('cors')
 const usuariosRouter = require('./routes/users')
+const ehbs = require('express-handlebars');
+const hbs = ehbs.create();
 
 
 
 
 
-const app = express()
+
+
+const app = express();
+
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
 
 const usuarios = [
@@ -38,7 +45,7 @@ app.use(cors());
  * 
  * Routes as Middlewares
  */
-app.use('/api/v1/users', usuariosRouter )
+app.use('/users', usuariosRouter )
 
 app.get('/home', function (req, res) {
 res.sendFile(`${__dirname}/public/home.html`);
@@ -46,7 +53,13 @@ res.sendFile(`${__dirname}/public/home.html`);
 });
 
 app.get('/signup', (req, res)=>{
-    res.sendFile(`${__dirname}/public/signup.html`);
+   //res.sendFile(`${__dirname}/public/signup.html`);
+   res.render('signUp',
+   {
+       title:'Sign Up',
+       nombre: 'Gabriel'    
+
+   })
 });
 
 app.listen(3000, ()=>{

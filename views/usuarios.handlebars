@@ -1,0 +1,24 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Age</th>
+        <th scope="col">User</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each usuarios}}
+      <tr>
+        <th scope="row">{{ this.id }}</th>
+        <td>{{ this.first }}</td>
+        <td>{{ this.last }}</td>
+        <td>{{ this.age }}</td>
+        <td>{{ this.user }}</td>
+      </tr>
+      {{/each}}
+    
+    </tbody>
+  </table>
+
