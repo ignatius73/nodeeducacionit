@@ -1,4 +1,4 @@
-const { open, readFile, writeFile } = require('fs/promises');
+import { open, readFile, writeFile } from 'fs/promises';
 
 
 
@@ -44,4 +44,5 @@ class Usuarios{
 
 }
 
-module.exports = Usuarios;
+export { Usuarios }
+//module.exports = Usuarios;

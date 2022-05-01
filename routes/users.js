@@ -1,7 +1,9 @@
-const { Router } = require('express');
-const { v4: uuidv4 } = require('uuid');
+import Router from 'express';
+import { v4 as uuidv4 } from 'uuid';
+
+import { Usuarios } from '../usuarios.js'
+
 const usuariosRouter = Router();
-const Usuarios = require('../usuarios')
 
 const usuariosClass = new Usuarios();
 
@@ -69,6 +71,6 @@ usuariosRouter.route('/api/v1')
     
 
 
-
-module.exports = usuariosRouter
+export default usuariosRouter
+//module.exports = usuariosRouter
 
