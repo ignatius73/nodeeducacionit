@@ -1,9 +1,11 @@
 //Importaciones
+import 'dotenv/config';
 import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import usuariosRouter from './routes/users.js'
 import { create } from 'express-handlebars';
+import dbConnection from './database/db.js';
 
 
 //Declaración de Objetos
@@ -36,6 +38,8 @@ app.get('/home', function (req, res) {
 
 });
 
+
+
 app.get('/signup', (req, res)=>{
    //res.sendFile(`${__dirname}/public/signup.html`);
    res.render('signUp',
@@ -46,6 +50,16 @@ app.get('/signup', (req, res)=>{
    })
 });
 
-app.listen(3000, ()=>{
-    console.log('Escuchando peticiones en el puerto 3000');
-})
+async function connectDB(){
+    try {
+        await dbConnection();
+        app.listen(process.env.PORT, ()=>{
+            console.log(`Escuchando peticiones en el puerto ${process.env.PORT}`);
+        })
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+connectDB();

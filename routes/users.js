@@ -1,7 +1,9 @@
 import Router from 'express';
 import { v4 as uuidv4 } from 'uuid';
+import { Usuarios } from '../usuarios.js';
+import Usuario from '../models/usuario.js';
 
-import { Usuarios } from '../usuarios.js'
+
 
 const usuariosRouter = Router();
 
@@ -28,13 +30,19 @@ usuariosRouter.route('/api/v1')
     })
     .post(async(req, res)=>{
 
-        console.log(req.body);
-        const user = req.body
-        user.id = uuidv4() 
-        console.log(usuariosData);  
-        usuariosData.push(user)
-        await usuariosClass.saveUser(JSON.stringify(usuariosData))
-        res.status(201).json(user);
+        
+        const { first_name, last_name, age }= req.body
+        
+        const user = new Usuario({first_name, last_name,age})
+      
+        try {
+            const resp = await user.save()
+            res.status(201).json(resp);
+            
+        } catch (error) {
+            res.status(400).json({ msg:'Faltan datos'})
+        }
+        
     })
     .put((req, res)=>{
         const user = req.body
