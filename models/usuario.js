@@ -13,6 +13,25 @@ const UsuarioSchema = new Schema({
   age:{
       type:Number,
       min:[18, 'Debes ser mayor de edad']     
+  },
+  avatar:{
+      type:String
+  },
+  user:{
+      type:String,
+      required:[true,'El usuario es obligatorio'],
+      /*unique:true*/
+  },
+  password:{
+      type:String,
+      validate:{
+        validator:function(v){
+          return /^[\$a-zA-Z0-9\-_\.\/?]{3,70}$/.test(v)
+        },
+        method: props => `${props.value} no cumple los requisitos`
+      },
+      minlength:8,
+      required:[true, "La contraseña es obligatoria"]
   }
     
 })
