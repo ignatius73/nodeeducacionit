@@ -26,6 +26,7 @@ async function loadUsers(req, res, next){
 usuariosRouter.route('/api/v1')
     .get(async(req,res)=>{
         let { from=0, limit } = req.query;
+        
         try {
 
 
@@ -39,8 +40,9 @@ usuariosRouter.route('/api/v1')
                 total,
                 users
             };
-            
             res.json(usuarios);
+
+           
             
         } catch (error) {
             res.status(500).json({msg:'Ocurrió un error', error});
@@ -111,6 +113,23 @@ usuariosRouter.route('/api/v1')
 
 
 })
+    usuariosRouter.get('/usuarios', async(req,res)=>{
+     
+       try {
+        const users = await Usuario.find().lean()
+        console.log(users)
+        res.render('usuarios',
+        {usuarios:users}
+        )
+            
+        } catch (error) {
+            res.status(500).json({msg:'Ocurrió un error', error});
+        }
+
+
+})
+
+
 
     
 

@@ -37,6 +37,7 @@
             
             const data = new URLSearchParams(formData)
             data.set('avatar', imageAsBase64)
+            
             data.delete('password2')
             fetch('/users/api/v1',
             {
@@ -46,7 +47,7 @@
             }).then( res => res.json())
             .then( data => {
                 
-                window.location = '/users/usuarios'
+              window.location = '/users/usuarios'
             })
             .catch(error => console.log(error))
 

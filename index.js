@@ -1,7 +1,9 @@
 //Importaciones
 import 'dotenv/config';
+import { createServer } from 'http';
 import path from 'path';
 import express from 'express';
+import server from './sockets/sockets.js';
 import cors from 'cors';
 import usuariosRouter from './routes/users.js'
 import { create } from 'express-handlebars';
@@ -10,9 +12,12 @@ import dbConnection from './database/db.js';
 
 //Declaración de Objetos
 const app = express();
+
+const httpServer = createServer(app);
+
 const hbs = create();
 
-
+server(httpServer);
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -45,15 +50,15 @@ app.get('/signup', (req, res)=>{
    res.render('signUp',
    {
        title:'Sign Up',
-       nombre: 'Gabriel'    
 
    })
 });
 
+
 async function connectDB(){
     try {
         await dbConnection();
-        app.listen(process.env.PORT, ()=>{
+        httpServer.listen(process.env.PORT, ()=>{
             console.log(`Escuchando peticiones en el puerto ${process.env.PORT}`);
         })
         
